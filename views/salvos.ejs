@@ -20,21 +20,21 @@
             <h3><%= timer.nome %></h3>
             
             <p class="timer-display" style="font-size: 2.2rem; margin: 0.8rem 0;">
-              ⏱️ <%= String(timer.minutos).padStart(2, '0') %>:<%= String(timer.segundos).padStart(2, '0') %>
+              <%= String(timer.minutos).padStart(2, '0') %>:<%= String(timer.segundos).padStart(2, '0') %>
             </p>
 
             <div class="card-actions" style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 0.8rem;">
               <a href="/?min=<%= timer.minutos %>&seg=<%= timer.segundos %>&nome=<%= encodeURIComponent(timer.nome) %>" class="btn btn-secondary" style="text-decoration: none; width: auto; font-size: 0.9rem; padding: 0.5rem 0.8rem;" title="Usar Novamente">
-                ▶️️ Usar
+                Usar
               </a>
 
               <button class="btn" style="width: auto; font-size: 0.9rem; padding: 0.5rem 0.8rem;" onclick="toggleEdit('<%= timer._id %>')">
-                ✏️ Editar
+                Editar
               </button>
 
               <form action="/salvos/deletar/<%= timer._id %>" method="POST" style="display: inline;">
-                <button type="submit" class="btn" style="width: auto; font-size: 0.9rem; padding: 0.5rem 0.8rem; background-color: #d9534f;" onclick="return confirm('Deseja realmente apagar este cronômetro?')">
-                  🗑️ Apagar
+                <button type="submit" class="btn" style="width: auto; font-size: 0.9rem; padding: 0.5rem 0.8rem; background-color: #c2c2c2;" onclick="return confirm('Deseja realmente apagar este cronômetro?')">
+                  Apagar
                 </button>
               </form>
             </div>

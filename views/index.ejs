@@ -1,34 +1,71 @@
 <%- include('partials/header') %>
 
-<main>
-  <div class="egg-timer-wrapper">
-    <h2 id="timer-title"><%= timerAtivo.nome %></h2>
-
-    <div class="egg-timer-body">
-      <div class="egg-yolk-top"></div>
-
-      <div class="timer-display" id="timer-display">00:00</div>
-
-      <div class="timer-inputs">
-        <input type="number" id="input-min" placeholder="Min" min="0" max="180" value="<%= timerAtivo.minutos %>">
-        <span class="colon">:</span>
-        <input type="number" id="input-seg" placeholder="Seg" min="0" max="59" value="<%= timerAtivo.segundos %>">
-      </div>
+<main class="container-multi">
+    <div class="topo-timers">
+        <h1>Meus Cronômetros</h1>
+        <button type="button" id="btn-novo-timer" class="btn btn-start">+ Novo Cronômetro</button>
     </div>
 
-    <div class="timer-actions">
-      <button id="btn-start" class="btn btn-start">Iniciar</button>
-      <button id="btn-pause" class="btn btn-pause" disabled>Pausar</button>
-      <button id="btn-reset" class="btn btn-reset">Resetar</button>
+    <!-- Container onde os múltiplos cronômetros vão ficar lado a lado -->
+    <div id="timers-container" class="timers-grid" 
+         data-inicial-min="<%= typeof minInicial !== 'undefined' ? minInicial : 0 %>" 
+         data-inicial-seg="<%= typeof segInicial !== 'undefined' ? segInicial : 0 %>"
+         data-inicial-nome="<%= typeof nomeInicial !== 'undefined' ? nomeInicial : '' %>">
     </div>
-  </div>
 </main>
 
-<form id="from-finalizar" action="/finalizar-timer" method="POST" style="display:none;">
-    <input type="hidden" name="minutos" id="final-min">
-    <input type="hidden" name="segundos" id="final-seg">
-</form>
+<!-- Template do Ovo (Clonado pelo JS para cada cronômetro) -->
+<template id="timer-template">
+    <div class="timer-card-item">
+        <button type="button" class="btn-fechar-timer" title="Remover cronômetro">&times;</button>
+        
+        <input type="text" class="timer-titulo-input" placeholder="Nome (ex: Macarrão)" />
+
+        <div class="egg-timer">
+            <div class="egg-top-mark"></div>
+            <div class="timer-display">00:00</div>
+            
+            <div class="time-inputs">
+                <input type="number" class="input-min" min="0" max="180" value="0" aria-label="Minutos">
+                <span>:</span>
+                <input type="number" class="input-seg" min="0" max="59" value="0" aria-label="Segundos">
+            </div>
+        </div>
+
+        <div class="timer-controls">
+            <button type="button" class="btn btn-start btn-toggle">Iniciar</button>
+            <button type="button" class="btn btn-add btn-add-60">+60s</button>
+            <button type="button" class="btn btn-reset">Resetar</button>
+        </div>
+    </div>
+</template>
+
+<!-- Modal que aparece quando um cronômetro acaba -->
+<div id="modal-finalizado" class="modal-overlay" style="display: none;">
+    <div class="modal-box">
+        <h2>⏰ Tempo Esgotado!</h2>
+        <p id="modal-texto-tempo">O cronômetro finalizou.</p>
+        
+        <% if (typeof usuarioLogado !== 'undefined' && usuarioLogado) { %>
+            <div class="modal-form-group">
+                <label for="modal-nome-timer">Deseja salvar este cronômetro?</label>
+                <input type="text" id="modal-nome-timer" placeholder="Ex: Bolo de Cenoura" />
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" id="btn-modal-salvar" class="btn btn-start">Salvar</button>
+                <button type="button" id="btn-modal-fechar" class="btn btn-reset">Não Salvar</button>
+            </div>
+        <% } else { %>
+            <p style="font-size: 0.9rem; color: #7f8c8d; margin: 1.2rem 0;">
+                Faça <a href="/login" style="color: #8fb2b9; font-weight: 600;">login</a> para poder salvar seus cronômetros!
+            </p>
+            <div class="modal-actions">
+                <button type="button" id="btn-modal-fechar" class="btn btn-start">OK</button>
+            </div>
+        <% } %>
+    </div>
+</div>
 
 <script src="/javascripts/timer.js"></script>
-
 <%- include('partials/footer') %>

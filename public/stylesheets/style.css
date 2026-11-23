@@ -287,17 +287,24 @@ main {
 .saved-timers-wrapper {
   width: 100%;
   max-width: 900px;
+  text-align: center;
+}
+
+.saved-timers-wrapper h2 {
+  margin-bottom: 1.5rem;
 }
 
 .grid-timers {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1.5rem;
 }
 
 .card-salvo {
-  max-width: 100%;
-  padding: 1.5rem;
+  width: 100%;
+  max-width: 420px;
+  padding: 1.8rem;
 }
 
 .error-msg {
@@ -314,4 +321,277 @@ footer {
   padding: 1.2rem;
   color: var(--text-muted);
   font-size: 0.85rem;
+}
+
+.card-salvo form .btn:hover {
+  background-color: #9e9e9e !important;
+}
+
+.btn-add {
+  background-color: var(--secondary, #b3c8cb);
+  color: var(--text-dark, #2c3e50);
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-add:hover {
+  background-color: var(--primary, #8fb2b9);
+  color: #ffffff;
+}
+
+/* =========================================
+   MÚLTIPLOS CRONÔMETROS & MODAL
+========================================= */
+
+.container-multi {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.topo-timers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.topo-timers h1 {
+  margin: 0;
+  color: var(--text-dark, #2c3e50);
+}
+
+/* Grade lado a lado dos ovos */
+.timers-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2.5rem;
+  align-items: flex-start;
+}
+
+.timer-card-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 20px;
+  transition: transform 0.2s ease;
+}
+
+/* Alerta visual quando o timer zera */
+.timer-card-item.timer-acabou .egg-timer {
+  box-shadow: 0 0 25px rgba(255, 165, 0, 0.75);
+  border-color: #ffa500;
+}
+
+/* Botão X para remover um cronômetro da tela */
+.btn-fechar-timer {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: transparent;
+  border: none;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--text-muted, #9e9e9e);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.btn-fechar-timer:hover {
+  color: #e74c3c;
+}
+
+/* Campo de nome opcional acima do ovo */
+.timer-titulo-input {
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  text-align: center;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-dark, #2c3e50);
+  margin-bottom: 0.8rem;
+  padding: 0.25rem 0.5rem;
+  width: 220px;
+  transition: border-color 0.2s ease;
+}
+
+.timer-titulo-input:focus {
+  outline: none;
+  border-bottom-color: var(--primary, #8fb2b9);
+}
+/* Modal (Pop-up) de Tempo Esgotado */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(44, 62, 80, 0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-box {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.modal-box h2 {
+  margin-top: 0;
+  color: var(--text-dark, #2c3e50);
+}
+
+.modal-form-group {
+  margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.modal-form-group label {
+  font-weight: 600;
+  color: var(--text-dark, #2c3e50);
+  font-size: 0.95rem;
+}
+
+.modal-form-group input {
+  padding: 0.7rem 1rem;
+  border: 2px solid var(--border-color, #c2c2c2);
+  border-radius: 12px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.modal-form-group input:focus {
+  outline: none;
+  border-color: var(--primary, #8fb2b9);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+/* =========================================
+   AJUSTE DO LAYOUT E DESENHO DO OVO
+========================================= */
+
+/* Garante que o título fique em cima e os ovos fiquem abaixo */
+main.container-multi {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: 100%;
+}
+
+.topo-timers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+#btn-novo-timer {
+  width: auto !important;
+  padding: 0.7rem 1.8rem !important;
+  border-radius: 50px !important;
+}
+
+/* Restaura o desenho do ovo branco */
+.egg-timer {
+  position: relative;
+  width: 260px;
+  height: 330px;
+  background: radial-gradient(circle at 50% 35%, #ffffff 65%, #f0f0f0 100%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08), inset 0 -5px 15px rgba(0, 0, 0, 0.05);
+  border: 2px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.2rem auto;
+}
+
+/* Detalhe laranja no topo do ovo */
+.egg-top-mark {
+  position: absolute;
+  top: 22px;
+  width: 55px;
+  height: 22px;
+  background: linear-gradient(180deg, #ffb703 0%, #fb8500 100%);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(251, 133, 0, 0.3);
+}
+
+/* Números grandes dentro do ovo */
+.timer-display {
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  letter-spacing: 3px;
+  margin-top: 1.5rem;
+  margin-bottom: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Caixinhas de minutos e segundos dentro do ovo */
+.time-inputs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.time-inputs input {
+  width: 52px;
+  height: 38px;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2c3e50;
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+}
+
+.time-inputs span {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #2c3e50;
+}
+
+/* Botões alinhados na horizontal em pílula abaixo do ovo */
+.timer-controls {
+  display: flex;
+  flex-direction: row !important;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.timer-controls .btn {
+  width: auto !important;
+  padding: 0.6rem 1.1rem !important;
+  border-radius: 50px !important;
+  font-size: 0.95rem !important;
+  margin: 0 !important;
 }

@@ -1,19 +1,27 @@
-<%- include ('partials/header') %>
-<div class="timer-card">
+<%- include('partials/header') %>
+
+<main>
+  <div class="card-container">
     <h2>⏱️ O tempo acabou!</h2>
-    <p>Você acabou de cronometrar: <strong><%= tempTimer.minutos %> min e <%= tempTimer.segundos %> seg</strong></p>
+    <p class="subtitle">
+      Você acabou de cronometrar: <strong><%= minutos %> min e <%= segundos %> seg</strong>
+    </p>
 
-    <form action="/salvar-timer/confirmar" method="POST" class="form-container" style="margin-top: 1.5rem;">
-        <div class="form-group">
-            <label for="nome">Escolha um nome para salvar este cronômetro:</label>
-            <input type="text" id="nome" name="nome" placeholder="EX: Macarrão, Ovos..." required>
-        </div>
+    <form action="/salvar-timer-confirmar" method="POST">
+      <input type="hidden" name="minutos" value="<%= minutos %>">
+      <input type="hidden" name="segundos" value="<%= segundos %>">
 
-        <div class="controls" style="margin-top: 1rem;">
-            <button type="submit" class="btn btn-primary">Salvar nos Salvos</button>
-            <a href="/" class="btn btn-danger">Não Salvar</a>
-        </div>
+      <div class="form-group">
+        <label for="nome">Escolha um nome para salvar este cronômetro:</label>
+        <input type="text" id="nome" name="nome" placeholder="Ex: Macarrão, Ovos..." required>
+      </div>
+
+      <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
+        <button type="submit" class="btn">Salvar nos Salvos</button>
+        <a href="/" class="btn btn-secondary" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">Não Salvar</a>
+      </div>
     </form>
-</div>
+  </div>
+</main>
 
 <%- include('partials/footer') %>
