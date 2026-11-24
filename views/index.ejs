@@ -6,15 +6,9 @@
         <button type="button" id="btn-novo-timer" class="btn btn-start">+ Novo Cronômetro</button>
     </div>
 
-    <!-- Container onde os múltiplos cronômetros vão ficar lado a lado -->
-    <div id="timers-container" class="timers-grid" 
-         data-inicial-min="<%= typeof minInicial !== 'undefined' ? minInicial : 0 %>" 
-         data-inicial-seg="<%= typeof segInicial !== 'undefined' ? segInicial : 0 %>"
-         data-inicial-nome="<%= typeof nomeInicial !== 'undefined' ? nomeInicial : '' %>">
-    </div>
+    <div id="timers-container" class="timers-grid"></div>
 </main>
 
-<!-- Template do Ovo (Clonado pelo JS para cada cronômetro) -->
 <template id="timer-template">
     <div class="timer-card-item">
         <button type="button" class="btn-fechar-timer" title="Remover cronômetro">&times;</button>
@@ -40,7 +34,6 @@
     </div>
 </template>
 
-<!-- Modal que aparece quando um cronômetro acaba -->
 <div id="modal-finalizado" class="modal-overlay" style="display: none;">
     <div class="modal-box">
         <h2>⏰ Tempo Esgotado!</h2>

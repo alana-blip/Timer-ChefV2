@@ -29,10 +29,6 @@ router.post('/cadastro', async (req, res) => {
 
     req.session.usuario = { id: novoUsuario._id, username: novoUsuario.username };
 
-    if (req.session.tempTimer) {
-      return res.redirect('/salvar-timer');
-    }
-
     res.redirect('/salvos');
   } catch (error) {
     console.error("❌ ERRO NO CADASTRO:", error); 
@@ -64,10 +60,6 @@ router.post('/login', async (req, res) => {
     }
 
     req.session.usuario = { id: usuario._id, username: usuario.username };
-
-    if (req.session.tempTimer) {
-      return res.redirect('/salvar-timer');
-    }
 
     res.redirect('/salvos');
   } catch (error) {

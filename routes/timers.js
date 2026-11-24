@@ -7,7 +7,6 @@ const precisaEstarLogado = (req, res, next) => {
     next();
 };
 
-// LISTAR CRONÔMETROS SALVOS
 router.get('/', precisaEstarLogado, async (req, res) => {
     const timers = await Timer.find({
         usuarioId: req.session.usuario.id
@@ -26,12 +25,10 @@ router.post('/', precisaEstarLogado, async (req, res) => {
             usuarioId: req.session.usuario.id
         });
 
-        // Se a requisição veio pelo JavaScript (modal), responde em JSON sem recarregar
         if (req.headers.accept && req.headers.accept.includes('application/json')) {
             return res.status(200).json({ sucesso: true, timer: novoTimer });
         }
 
-        // Caso contrário, mantém o redirecionamento normal
         res.redirect('/salvos');
     } catch (erro) {
         console.error('Erro ao salvar timer:', erro);
@@ -42,7 +39,6 @@ router.post('/', precisaEstarLogado, async (req, res) => {
     }
 });
 
-// EDITAR CRONÔMETRO
 router.post('/editar/:id', precisaEstarLogado, async (req, res) => {
     const { nome, minutos, segundos } = req.body;
 
@@ -57,7 +53,6 @@ router.post('/editar/:id', precisaEstarLogado, async (req, res) => {
     res.redirect('/salvos');
 });
 
-// DELETAR CRONÔMETRO (Corrigido req.session.usuario.id)
 router.post('/deletar/:id', precisaEstarLogado, async (req, res) => {
     await Timer.findOneAndDelete({
         _id: req.params.id,

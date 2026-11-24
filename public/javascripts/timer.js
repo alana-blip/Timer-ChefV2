@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const template = document.getElementById('timer-template');
     const btnNovoTimer = document.getElementById('btn-novo-timer');
 
-    // Elementos do Modal de Finalização
     const modal = document.getElementById('modal-finalizado');
     const modalTextoTempo = document.getElementById('modal-texto-tempo');
     const modalNomeInput = document.getElementById('modal-nome-timer');
@@ -14,15 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const STORAGE_KEY = 'timerchef_ativos';
     let timerFinalizadoAtual = null;
-    const listaTimers = []; // Guarda referências para salvar o estado no localStorage
+    const listaTimers = []; 
 
-    // Salva o estado atual de todos os cronômetros no navegador
     function salvarEstadoLocal() {
         const dados = listaTimers.map(t => t.getEstado());
         localStorage.setItem(STORAGE_KEY, JSON.stringify(dados));
     }
 
-    // Som de alarme suave gerado pelo próprio navegador
     function tocarAlarme() {
         try {
             const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -44,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Abre o modal quando um cronômetro chega a 00:00
     function abrirModalFinalizado(dadosTimer) {
         timerFinalizadoAtual = dadosTimer;
         const minStr = String(dadosTimer.minutos).padStart(2, '0');
@@ -58,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Salva no MongoDB via fetch() sem recarregar a página (apenas se logado)
     if (btnModalSalvar) {
         btnModalSalvar.addEventListener('click', async () => {
             if (!timerFinalizadoAtual) return;
@@ -106,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Função que cria e inicializa um cronômetro independente
     function criarCronometro(config = {}) {
         const minInicial = parseInt(config.minInicial) || 0;
         const segInicial = parseInt(config.segInicial) || 0;
@@ -136,10 +130,9 @@ document.addEventListener('DOMContentLoaded', () => {
             : remainingSeconds;
 
         let timerInterval = null;
-        let estado = config.estado || 'idle'; // 'idle' | 'running' | 'paused'
+        let estado = config.estado || 'idle'; 
         let endTime = config.endTime || null;
 
-        // Se estava rodando enquanto o usuário navegou em outra aba/página, recalcula o tempo que passou
         if (estado === 'running' && endTime) {
             const diff = Math.ceil((endTime - Date.now()) / 1000);
             if (diff > 0) {
@@ -231,7 +224,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 250);
         }
 
-        // Restaura visual caso tenha sido carregado já pausado ou rodando
         if (estado === 'paused') {
             btnToggle.textContent = 'Retomar';
             inputMin.disabled = true;
@@ -240,7 +232,6 @@ document.addEventListener('DOMContentLoaded', () => {
             iniciarContagem();
         }
 
-        // Botão +60s
         btnAdd60.addEventListener('click', () => {
             remainingSeconds += 60;
             totalDurationSeconds += 60;
@@ -257,7 +248,6 @@ document.addEventListener('DOMContentLoaded', () => {
             salvarEstadoLocal();
         });
 
-        // Botão Iniciar / Pausar / Retomar
         btnToggle.addEventListener('click', () => {
             if (estado === 'idle' || estado === 'paused') {
                 if (remainingSeconds <= 0) {
@@ -282,7 +272,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Botão Resetar
         btnReset.addEventListener('click', () => {
             clearInterval(timerInterval);
             estado = 'idle';
@@ -295,7 +284,6 @@ document.addEventListener('DOMContentLoaded', () => {
             updateDisplayFromInputs();
         });
 
-        // Botão X (Remover cronômetro)
         btnFechar.addEventListener('click', () => {
             if (timersContainer.children.length <= 1) {
                 btnReset.click();
@@ -316,14 +304,12 @@ document.addEventListener('DOMContentLoaded', () => {
         salvarEstadoLocal();
     }
 
-    // Botão "+ Novo Cronômetro"
     if (btnNovoTimer) {
         btnNovoTimer.addEventListener('click', () => {
             criarCronometro({ minInicial: 0, segInicial: 0, nome: '' });
         });
     }
 
-    // 1. Restaura os cronômetros que já estavam na tela antes de sair/atualizar
     let salvosNaSessao = [];
     try {
         salvosNaSessao = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
@@ -333,7 +319,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     salvosNaSessao.forEach(item => criarCronometro(item));
 
-    // 2. Verifica se veio algum cronômetro novo pelo botão "Usar" na URL
     const urlParams = new URLSearchParams(window.location.search);
     const temParametroNaUrl = urlParams.has('min') || urlParams.has('seg') || urlParams.has('nome');
 
@@ -342,7 +327,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const segUrl = parseInt(urlParams.get('seg')) || 0;
         const nomeUrl = urlParams.get('nome') || '';
 
-        // Se havia apenas 1 cronômetro vazio (00:00 sem nome), substitui ele; caso contrário, adiciona ao lado!
         if (
             listaTimers.length === 1 &&
             listaTimers[0].getEstado().remainingSeconds === 0 &&
@@ -354,11 +338,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         criarCronometro({ minInicial: minUrl, segInicial: segUrl, nome: nomeUrl });
 
-        // Limpa os parâmetros da URL para não duplicar se o usuário apertar F5 depois
         window.history.replaceState({}, document.title, '/');
     }
 
-    // 3. Se não havia nenhum cronômetro salvo nem na URL, cria o primeiro vazio
     if (listaTimers.length === 0) {
         criarCronometro({ minInicial: 0, segInicial: 0, nome: '' });
     }
