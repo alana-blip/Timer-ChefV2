@@ -340,10 +340,6 @@ footer {
   color: #ffffff;
 }
 
-/* =========================================
-   MÚLTIPLOS CRONÔMETROS & MODAL
-========================================= */
-
 .container-multi {
   max-width: 1200px;
   margin: 0 auto;
@@ -365,7 +361,6 @@ footer {
   color: var(--text-dark, #2c3e50);
 }
 
-/* Grade lado a lado dos ovos */
 .timers-grid {
   display: flex;
   flex-wrap: wrap;
@@ -384,13 +379,11 @@ footer {
   transition: transform 0.2s ease;
 }
 
-/* Alerta visual quando o timer zera */
 .timer-card-item.timer-acabou .egg-timer {
   box-shadow: 0 0 25px rgba(255, 165, 0, 0.75);
   border-color: #ffa500;
 }
 
-/* Botão X para remover um cronômetro da tela */
 .btn-fechar-timer {
   position: absolute;
   top: 0.5rem;
@@ -408,7 +401,6 @@ footer {
   color: #e74c3c;
 }
 
-/* Campo de nome opcional acima do ovo */
 .timer-titulo-input {
   border: none;
   border-bottom: 2px solid transparent;
@@ -427,7 +419,7 @@ footer {
   outline: none;
   border-bottom-color: var(--primary, #8fb2b9);
 }
-/* Modal (Pop-up) de Tempo Esgotado */
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -487,11 +479,7 @@ footer {
   justify-content: center;
   gap: 1rem;
 }
-/* =========================================
-   AJUSTE DO LAYOUT E DESENHO DO OVO
-========================================= */
 
-/* Garante que o título fique em cima e os ovos fiquem abaixo */
 main.container-multi {
   display: flex !important;
   flex-direction: column !important;
@@ -514,7 +502,6 @@ main.container-multi {
   border-radius: 50px !important;
 }
 
-/* Restaura o desenho do ovo branco */
 .egg-timer {
   position: relative;
   width: 260px;
@@ -530,7 +517,6 @@ main.container-multi {
   margin: 0 auto 1.2rem auto;
 }
 
-/* Detalhe laranja no topo do ovo */
 .egg-top-mark {
   position: absolute;
   top: 22px;
@@ -541,7 +527,6 @@ main.container-multi {
   box-shadow: 0 2px 4px rgba(251, 133, 0, 0.3);
 }
 
-/* Números grandes dentro do ovo */
 .timer-display {
   font-size: 3.2rem;
   font-weight: 700;
@@ -552,7 +537,6 @@ main.container-multi {
   font-variant-numeric: tabular-nums;
 }
 
-/* Caixinhas de minutos e segundos dentro do ovo */
 .time-inputs {
   display: flex;
   align-items: center;
@@ -578,7 +562,6 @@ main.container-multi {
   color: #2c3e50;
 }
 
-/* Botões alinhados na horizontal em pílula abaixo do ovo */
 .timer-controls {
   display: flex;
   flex-direction: row !important;
